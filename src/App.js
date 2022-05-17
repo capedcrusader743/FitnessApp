@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { Routes, Route, Navigate} from "react-router-dom";
 import './App.css';
+import Home from "./Home";
+import About from "./About";
+import {auth} from "./firebaseConfig.js"
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+
+
 
 function App() {
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+    .then((re) => {
+      console.log(re);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Welcome to React Router!</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+      <button onClick={signInWithGoogle}>
+        Sign In
+      </button>
     </div>
   );
 }
