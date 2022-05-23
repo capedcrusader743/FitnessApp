@@ -1,7 +1,8 @@
 .sign-in {
     text-align: center;
     display: flex;
-    
+    align-items: center;
+    justify-content: center;
 }
 
 .app_name {
@@ -23,3 +24,27 @@
 .welcome {
     color: darkmagenta;
 }
+
+.signin_container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+    padding: 30px;
+  }
+  .signin_textBox {
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .signin_btn {
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border: none;
+    color: white;
+    background-color: black;
+  }
+  .signin_google {
+    background-color: #4285f4;
+  }
