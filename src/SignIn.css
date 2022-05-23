@@ -1,4 +1,25 @@
 .sign-in {
     text-align: center;
     display: flex;
+    
+}
+
+.app_name {
+    color: darkmagenta;
+}
+
+.motivation_intro {
+    color:rgb(194, 129, 194);
+    font-weight: bold;
+}
+
+.fitness_icon {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    margin-top: 80px;
+}
+
+.welcome {
+    color: darkmagenta;
 }

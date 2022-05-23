@@ -12,7 +12,7 @@ function About() {
         </p>
       </main>
       <nav>
-        <Link to="/">Home</Link>
+        <Link to="/home">Home</Link>
       </nav>
     </>
   )
