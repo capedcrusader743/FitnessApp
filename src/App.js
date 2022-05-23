@@ -3,32 +3,24 @@ import { Routes, Route, Navigate} from "react-router-dom";
 import './App.css';
 import Home from "./Home";
 import About from "./About";
-import {auth} from "./firebaseConfig.js"
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import SignIn from "./SignIn";
+
 import Splash from './Splash'
+import React, { useState } from "react";
+import SignUp from "./SignUp";
 
 function App() {
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-    .then((re) => {
-      console.log(re);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
+
   return (
     <div className="App">
-      <Splash />
-      <h1>Welcome to React Router!</h1>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Splash />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
-      <button onClick={signInWithGoogle}>
-        Sign In
-      </button>
+
     </div>
   );
 }

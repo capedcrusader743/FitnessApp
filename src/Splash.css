@@ -13,3 +13,8 @@
     width: 200px;
     margin-top: 80px;
 }
+
+.to_signin {
+    color:rgb(194, 129, 194);
+    font-weight: bold;  
+}
