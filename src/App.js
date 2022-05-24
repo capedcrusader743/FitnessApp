@@ -4,10 +4,10 @@ import './App.css';
 import Home from "./Home";
 import About from "./About";
 import SignIn from "./SignIn";
-
 import Splash from './Splash'
-import React, { useState } from "react";
+import React from "react";
 import SignUp from "./SignUp";
+import Reset from "./Reset";
 
 function App() {
 
@@ -19,6 +19,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/reset" element={<SignUp />} />
       </Routes>
 
     </div>

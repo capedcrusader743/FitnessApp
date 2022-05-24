@@ -27,7 +27,9 @@ function SignUp() {
 
   return (
     <div className="register">
-      <h1>Hello</h1>
+      <h1 className='welcome'>Welcome to SignUp Page</h1>
+      <img className='fitness_icon' src='https://i.pinimg.com/736x/99/ec/1b/99ec1bc01c1c759a9af0f35ed8477531.jpg' alt='' />
+      <h1 className='app_name'>App Name</h1>
       <div className="register__container">
         <input
           type="text"
@@ -60,7 +62,7 @@ function SignUp() {
           Register with Google
         </button>
         <div>
-          Already have an account? <Link to="/">Login</Link> now.
+          Already have an account? <Link to="/signin">Login</Link> now.
         </div>
       </div>
     </div>
