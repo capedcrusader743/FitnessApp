@@ -7,6 +7,7 @@ import { query, collection, getDocs, where } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
+import MuscleGroup from './MuscleGroup';
 
 function Home() {
 
@@ -30,6 +31,25 @@ function Home() {
     fetchUserName();
   }, [user, loading]);
 
+  const [muscleGroup, setMuscleGroup] = useState([""]);
+
+  // function handleChange(event) {
+  //   const muscle = event.target.value;
+
+  //   setMuscleGroup(prevMuscle => {
+  //     return {
+  //       ...prevMuscle,
+  //       muscle: value
+  //     };
+  //   });
+  // }
+
+  function addMuscleGroup() {
+    setMuscleGroup([...muscleGroup, "a"])
+  }
+
+
+
   return (
 
     <div className='homepage'>
@@ -39,9 +59,16 @@ function Home() {
         <div>{name}</div>
         <div>{user?.email}</div>
         <h1>Pick your muscle group</h1>
-        <Fab color="primary" aria-label="add">
+        {/* <form className='create-muscle-group'>
+          <input
+            name="musle"
+            placeholder='Muscle'
+          />
+        </form> */}
+        <Fab onClick={addMuscleGroup} color="primary" aria-label="add">
           <AddIcon />
         </Fab>
+        {muscleGroup.map((item, i) => ( <MuscleGroup text={item} /> ))} 
       </div>
     </div>
 
