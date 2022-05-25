@@ -83,9 +83,10 @@ const sendPasswordReset = async (email) => {
 
 const logout = () => {
   signOut(auth);
+
 };
 
 
-export {db, auth, signInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword, sendPasswordReset, logout}
+export {db, auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword, sendPasswordReset, logout}
 
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);

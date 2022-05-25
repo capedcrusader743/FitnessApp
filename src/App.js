@@ -1,5 +1,5 @@
 
-import { Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import './App.css';
 import Home from "./Home";
 import About from "./About";
@@ -19,7 +19,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/reset" element={<SignUp />} />
+        <Route path="/reset" element={<Reset />} />
       </Routes>
 
     </div>

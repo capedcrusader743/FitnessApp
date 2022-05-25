@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './SignIn.css';
-import { auth, signInWithGoogle, signInWithEmailAndPassword } from "./firebaseConfig.js";
+import { auth, signInWithGoogle, logInWithEmailAndPassword } from "./firebaseConfig.js";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -43,7 +43,7 @@ function SignIn() {
                 />
                 <button
                     className='signin_btn'
-                    onClick={(e) => signInWithEmailAndPassword(email, password)}
+                    onClick={() => logInWithEmailAndPassword(email, password)}
                 >
                     Login with Email
                 </button>
