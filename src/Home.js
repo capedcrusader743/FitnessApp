@@ -4,15 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db, logout } from './firebaseConfig';
 import { query, collection, getDocs, where } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
-import AddIcon from '@mui/icons-material/Add';
-import Fab from '@mui/material/Fab';
 import MuscleGroup from './MuscleGroup';
+import CreateMuscle from './CreateMuscle';
 
 function Home() {
 
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  const [muscleGroup, setMuscleGroup] = useState([]);
   const fetchUserName = async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -30,21 +30,10 @@ function Home() {
     fetchUserName();
   }, [user, loading]);
 
-  const [muscleGroup, setMuscleGroup] = useState([""]);
-
-  // function handleChange(event) {
-  //   const muscle = event.target.value;
-
-  //   setMuscleGroup(prevMuscle => {
-  //     return {
-  //       ...prevMuscle,
-  //       muscle: value
-  //     };
-  //   });
-  // }
-
-  function addMuscleGroup() {
-    setMuscleGroup([...muscleGroup, "a"])
+  function addMuscleGroup(newMuscleGroup) {
+    setMuscleGroup(prevMuscleGroup => {
+      return [...prevMuscleGroup, newMuscleGroup];
+    });
   }
 
 
@@ -58,16 +47,16 @@ function Home() {
         <div>{name}</div>
         <div>{user?.email}</div>
         <h1>Pick your muscle group</h1>
-        {/* <form className='create-muscle-group'>
-          <input
-            name="musle"
-            placeholder='Muscle'
-          />
-        </form> */}
-        <Fab onClick={addMuscleGroup} color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
-        {muscleGroup.map((item, i) => ( <MuscleGroup text={item} /> ))} 
+        <CreateMuscle onAdd={addMuscleGroup} />
+        {muscleGroup.map((muscleItem, index) => {
+          return (
+            <MuscleGroup
+              key={index}
+              id={index}
+              muscle={muscleItem.muscle}
+            />
+          );
+        })}
       </div>
     </div>
 
