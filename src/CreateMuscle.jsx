@@ -13,8 +13,9 @@ function CreateMuscle(props) {
 
     function submitMuscle(event) {
         console.log("submit");
+        console.log(inputText);
         props.onAdd(inputText);
-        // setInputText("");
+        setInputText("");
         event.preventDefault();
     }
 
@@ -23,8 +24,9 @@ function CreateMuscle(props) {
         <form className='create-muscle'> 
             <input
                 name='muscle'
+                type="text"
                 onChange={handleChange}
-                value={inputText.muscle}
+                value={inputText}
                 placeholder='Muscle'
             />
             <Fab onClick={submitMuscle} color="primary" aria-label="add">

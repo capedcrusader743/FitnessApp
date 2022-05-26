@@ -30,9 +30,9 @@ function Home() {
     fetchUserName();
   }, [user, loading]);
 
-  function addMuscleGroup(newMuscleGroup) {
+  function addMuscleGroup(inputText) {
     setMuscleGroup(prevMuscleGroup => {
-      return [...prevMuscleGroup, newMuscleGroup];
+      return [...prevMuscleGroup, inputText];
     });
   }
 
@@ -48,15 +48,17 @@ function Home() {
         <div>{user?.email}</div>
         <h1>Pick your muscle group</h1>
         <CreateMuscle onAdd={addMuscleGroup} />
-        {muscleGroup.map((muscleItem, index) => {
+        <ul>
+          {muscleGroup.map((muscleItem, index) => {
           return (
             <MuscleGroup
               key={index}
               id={index}
-              muscle={muscleItem.muscle}
+              muscle={muscleItem}
             />
           );
         })}
+        </ul>
       </div>
     </div>
 
