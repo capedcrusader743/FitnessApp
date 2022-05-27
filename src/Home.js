@@ -38,6 +38,14 @@ function Home() {
     });
   }
 
+  function deleteMuscleGroup(id) {
+    setMuscleGroup(prevMuscleGroup => {
+      return prevMuscleGroup.filter((muscle, index) => {
+        return index !== id;
+      });
+    });
+  }
+
 
 
   return (
@@ -57,6 +65,7 @@ function Home() {
               key={index}
               id={index}
               muscle={muscleItem}
+              onDelete={deleteMuscleGroup}
             />
           );
         })}
