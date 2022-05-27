@@ -6,6 +6,8 @@ import { query, collection, getDocs, where } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import MuscleGroup from './MuscleGroup';
 import CreateMuscle from './CreateMuscle';
+import Stack from '@mui/material/Stack';
+
 
 function Home() {
 
@@ -48,7 +50,7 @@ function Home() {
         <div>{user?.email}</div>
         <h1>Pick your muscle group</h1>
         <CreateMuscle onAdd={addMuscleGroup} />
-        <ul>
+        <Stack spacing={2} direction="column">
           {muscleGroup.map((muscleItem, index) => {
           return (
             <MuscleGroup
@@ -58,7 +60,7 @@ function Home() {
             />
           );
         })}
-        </ul>
+        </Stack>
       </div>
     </div>
 

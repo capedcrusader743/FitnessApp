@@ -1,9 +1,10 @@
 import React from 'react';
+import Button from '@mui/material/Button';
 
 function MuscleGroup(props) {
   return (
       <div className='muscle_group'>
-          <h3>{props.muscle}</h3>
+          <Button variant='contained'>{props.muscle}</Button>
       </div>
   )
 }
