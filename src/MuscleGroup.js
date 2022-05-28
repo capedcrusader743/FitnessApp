@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Link } from 'react-router-dom';
+
 
 function MuscleGroup(props) {
 
@@ -10,7 +12,10 @@ function MuscleGroup(props) {
 
   return (
       <div className='muscle_group'>
-      <Button variant='contained'>{props.muscle}</Button>
+      <Link to="/page" style={{textDecoration: 'none'}}>
+        <Button variant='contained'>{props.muscle}</Button>
+      </Link>
+      
       <Button onClick={handleClick} variant="outlined"><DeleteOutlineIcon /></Button>
       </div>
   )
