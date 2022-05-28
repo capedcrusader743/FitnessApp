@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth, db, logout } from './firebaseConfig';
-import { query, collection, getDocs, where } from 'firebase/firestore';
+import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import MuscleGroup from './MuscleGroup';
 import CreateMuscle from './CreateMuscle';
@@ -26,11 +26,30 @@ function Home() {
       alert("An error occured while fetching user data");
     }
   };
+
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
     fetchUserName();
   }, [user, loading]);
+
+  // useEffect(() => {
+  //   getMuscleGroup();
+  // }, []);
+
+  useEffect(() => {
+    const muscleGroupRef = collection(db, 'MuscleGroup');
+    const unsubscribe = onSnapshot(muscleGroupRef, snapshot => {
+      setMuscleGroup(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+    })
+    return () => {
+      unsubscribe();
+    }
+  },[])
+
+  useEffect(() => {
+    console.log(muscleGroup)
+  }, [muscleGroup]);
 
   function addMuscleGroup(inputText) {
     setMuscleGroup(prevMuscleGroup => {
@@ -39,13 +58,31 @@ function Home() {
   }
 
   function deleteMuscleGroup(id) {
-    setMuscleGroup(prevMuscleGroup => {
-      return prevMuscleGroup.filter((muscle, index) => {
-        return index !== id;
-      });
-    });
+
+    const docRef = doc(db, 'MuscleGroup', id);
+    deleteDoc(docRef)
+      .then(() => console.log('Document deleted'))
+      .catch(error => console.log(error.message));
+    // setMuscleGroup(prevMuscleGroup => {
+    //   return prevMuscleGroup.filter((muscleeeee, index) => {
+    //     return index !== id;
+    //   });
+    // });
   }
 
+  // function getMuscleGroup() {
+  //   const muscleGroupRef = collection(db, 'MuscleGroup');
+  //   getDocs(muscleGroupRef)
+  //     .then(response => {
+  //       const muscles = response.docs.map(doc => ({
+  //         data: doc.data(),
+  //         id: doc.id,
+  //       }))
+  //       //console.log(response.docs);
+  //       setMuscleGroup(muscles);
+  //     })
+  //     .catch(error => console.log(error.message));
+  // }
 
 
   return (
@@ -59,17 +96,24 @@ function Home() {
         <h1>Pick your muscle group</h1>
         <CreateMuscle onAdd={addMuscleGroup} />
         <Stack spacing={2} direction="column">
-          {muscleGroup.map((muscleItem, index) => {
+          {muscleGroup.map((muscleItem) => {
           return (
-            <MuscleGroup
-              key={index}
-              id={index}
-              muscle={muscleItem}
+            <MuscleGroup 
+              key={muscleItem.id}
+              id={muscleItem.id}
+              muscle={muscleItem.data.muscle}
               onDelete={deleteMuscleGroup}
             />
           );
         })}
         </Stack>
+        {/* <ul>
+          {muscleGroup.map(muscleItem => (
+            <li key={muscleItem.id}>
+              {muscleItem.data.muscle}
+            </li>
+          ))}
+        </ul> */}
       </div>
     </div>
 

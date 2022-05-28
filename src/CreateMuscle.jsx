@@ -1,32 +1,39 @@
 import React, { useState } from 'react'
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
+import { db } from './firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
 function CreateMuscle(props) {
 
-    const [inputText, setInputText] = useState("");
+    const [muscle, setMuscle] = useState("");
 
     function handleChange(event) {
         const newValue = event.target.value;
-        setInputText(newValue);
+        setMuscle(newValue);
     }
 
     function submitMuscle(event) {
-        console.log("submit");
-        console.log(inputText);
-        props.onAdd(inputText);
-        setInputText("");
         event.preventDefault();
+        const muscleGroupRef = collection(db, 'MuscleGroup');
+        addDoc(muscleGroupRef, { muscle })
+            .then(response => {
+                console.log(response.id);
+            })
+            .catch(error => {
+                console.log(error.message);
+        })
+        // setMuscle("");
     }
 
   return (
     <div>
         <form className='create-muscle'> 
             <input
-                name='muscle'
+                id='muscle'
                 type="text"
                 onChange={handleChange}
-                value={inputText}
+                value={muscle}
                 placeholder='Muscle'
             />
             <Fab onClick={submitMuscle} color="primary" aria-label="add">

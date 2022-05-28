@@ -8,6 +8,7 @@ import Splash from './Splash'
 import React from "react";
 import SignUp from "./SignUp";
 import Reset from "./Reset";
+import Page from "./Page";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<Reset />} />
+        <Route path="/page" element={<Page />} />
       </Routes>
 
     </div>
