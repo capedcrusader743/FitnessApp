@@ -13,7 +13,7 @@ function MuscleGroup(props) {
   return (
       <div className='muscle_group'>
       <Link to="/page" style={{textDecoration: 'none'}}>
-        <Button variant='contained'>{props.muscle}</Button>
+        <Button variant='contained'>{props.name}</Button>
       </Link>
       
       <Button onClick={handleClick} variant="outlined"><DeleteOutlineIcon /></Button>
