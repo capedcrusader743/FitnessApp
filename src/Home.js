@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth, db, logout } from './firebaseConfig';
-import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import MuscleGroup from './MuscleGroup';
 import CreateMuscle from './CreateMuscle';
@@ -37,8 +37,14 @@ function Home() {
   //   getMuscleGroup();
   // }, []);
 
+  // order the collection by alpha ascending
   useEffect(() => {
-    const muscleGroupRef = collection(db, 'MuscleGroup');
+    const muscleGroupRef = query(
+      collection(db, 'Categories'), 
+      where('user', '==', user?.uid),
+      orderBy('name', 'asc')
+    );
+    // const muscleGroupRef = collection(db, 'Categories');
     const unsubscribe = onSnapshot(muscleGroupRef, snapshot => {
       setMuscleGroup(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
     })
@@ -48,10 +54,11 @@ function Home() {
   },[])
 
   useEffect(() => {
-    console.log(muscleGroup)
+    // console.log("muscleGroup: ", muscleGroup)
   }, [muscleGroup]);
 
   function addMuscleGroup(inputText) {
+    // console.log(inputText);
     setMuscleGroup(prevMuscleGroup => {
       return [...prevMuscleGroup, inputText];
     });
@@ -59,7 +66,9 @@ function Home() {
 
   function deleteMuscleGroup(id) {
 
-    const docRef = doc(db, 'MuscleGroup', id);
+    const docRef = doc(db, 'Categories', id);
+    // console.log(key);
+    console.log(docRef);
     deleteDoc(docRef)
       .then(() => console.log('Document deleted'))
       .catch(error => console.log(error.message));
@@ -92,6 +101,7 @@ function Home() {
         <ButtonAppBar />
         <p>Logged in as</p> 
         <div>{name}</div>
+        <div>UserID: {user?.uid}</div>
         <div>{user?.email}</div>
         <h1>Pick your muscle group</h1>
         <CreateMuscle onAdd={addMuscleGroup} />
@@ -101,7 +111,9 @@ function Home() {
             <MuscleGroup 
               key={muscleItem.id}
               id={muscleItem.id}
-              muscle={muscleItem.data.muscle}
+              // muscle={muscleItem.data}
+              // id={muscleItem.id}
+              name={muscleItem.data.name}
               onDelete={deleteMuscleGroup}
             />
           );
