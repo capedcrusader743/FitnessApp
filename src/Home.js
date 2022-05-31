@@ -54,7 +54,7 @@ function Home() {
   },[])
 
   useEffect(() => {
-    console.log("muscleGroup: ", muscleGroup)
+    // console.log("muscleGroup: ", muscleGroup)
   }, [muscleGroup]);
 
   function addMuscleGroup(inputText) {
