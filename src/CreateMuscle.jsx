@@ -8,7 +8,7 @@ import { collection, addDoc } from 'firebase/firestore';
 function CreateMuscle(props) {
 
     const [muscle, setMuscle] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
     function handleChange(event) {
         const newValue = event.target.value;
@@ -19,7 +19,7 @@ function CreateMuscle(props) {
     function submitMuscle(event) {
         event.preventDefault();
         // await before addDoc
-        const muscleGroupRef = addDoc(collection(db, 'Categories'), {
+        addDoc(collection(db, 'Categories'), {
             name: muscle,
             user: user?.uid
         }); 

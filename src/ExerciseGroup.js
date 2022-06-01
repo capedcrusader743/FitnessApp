@@ -4,22 +4,22 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Link } from 'react-router-dom';
 
 
-function MuscleGroup(props) {
+function ExerciseGroup(props) {
 
   function handleClick() {
     props.onDelete(props.id);
   }
 
   return (
-      <div className='muscle_group'>
-      <Link to={`/home/${props.name}`} state={{from: props.name}} style={{textDecoration: 'none'}}>
+    <div className='each-exercise'>
+        <Link to={`/home/${props.cat}/${props.name}`} state={{pass_over: [props.cat, props.name]}} style={{textDecoration: 'none'}}>
         <Button variant='contained'>{props.name}</Button>
         {/* <Exercises name={props.name}></Exercises> */}
-      </Link>
-      
-      <Button onClick={handleClick} variant="outlined"><DeleteOutlineIcon /></Button>
-      </div>
+        </Link>
+        
+        <Button onClick={handleClick} variant="outlined"><DeleteOutlineIcon /></Button>
+    </div>
   )
 }
 
-export default MuscleGroup
+export default ExerciseGroup

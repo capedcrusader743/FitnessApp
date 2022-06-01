@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth, db, logout } from './firebaseConfig';
+import { auth, db } from './firebaseConfig';
 import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import MuscleGroup from './MuscleGroup';
@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 
 function Home() {
 
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const [muscleGroup, setMuscleGroup] = useState([]);
@@ -53,9 +53,9 @@ function Home() {
     }
   },[])
 
-  useEffect(() => {
-    // console.log("muscleGroup: ", muscleGroup)
-  }, [muscleGroup]);
+  // useEffect(() => {
+  //   // console.log("muscleGroup: ", muscleGroup)
+  // }, [muscleGroup]);
 
   function addMuscleGroup(inputText) {
     // console.log(inputText);
@@ -72,27 +72,7 @@ function Home() {
     deleteDoc(docRef)
       .then(() => console.log('Document deleted'))
       .catch(error => console.log(error.message));
-    // setMuscleGroup(prevMuscleGroup => {
-    //   return prevMuscleGroup.filter((muscleeeee, index) => {
-    //     return index !== id;
-    //   });
-    // });
   }
-
-  // function getMuscleGroup() {
-  //   const muscleGroupRef = collection(db, 'MuscleGroup');
-  //   getDocs(muscleGroupRef)
-  //     .then(response => {
-  //       const muscles = response.docs.map(doc => ({
-  //         data: doc.data(),
-  //         id: doc.id,
-  //       }))
-  //       //console.log(response.docs);
-  //       setMuscleGroup(muscles);
-  //     })
-  //     .catch(error => console.log(error.message));
-  // }
-
 
   return (
 
