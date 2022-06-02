@@ -22,7 +22,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<Reset />} />
-        <Route path="/home/:muscle" element={<Exercises />} />
+        <Route path="/home/:from" element={<Exercises />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

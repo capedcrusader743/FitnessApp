@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
 import { db, auth } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import Stack from '@mui/material/Stack';
@@ -10,9 +9,9 @@ import CreateExercise from './CreateExercise';
 import ExerciseGroup from './ExerciseGroup';
 
 function Exercises() {
-  const location = useLocation();
-  const { from } = location.state;
-  console.log({from})
+  let { from } = useParams();
+  console.log(from);
+
 
   const [user, loading] = useAuthState(auth);
   const [exercise_list, setexercise_list] = useState([]);
@@ -31,24 +30,24 @@ function Exercises() {
   };
 
   const fetchExercise = async () => {
-    try {
-      const exerciseRef = query(
-        collection(db, 'Workouts'), 
-        where('user', '==', user?.uid),
-        where('category', '==', from),
-        orderBy('name', 'asc')
-      );
+     try {
+       const exerciseRef = query(
+         collection(db, 'Workouts'), 
+         where('user', '==', user?.uid),
+         where('category', '==', from),
+         orderBy('name', 'asc')
+       );
 
-      const unsubscribe = onSnapshot(exerciseRef, snapshot => {
-        setexercise_list(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
-      })
-      return () => {
-        unsubscribe();
-      }
-    } catch (err) {
-      console.error(err);
-      alert("An error occured while fetching user data");
-    }
+       const unsubscribe = onSnapshot(exerciseRef, snapshot => {
+         setexercise_list(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+       })
+       return () => {
+         unsubscribe();
+       }
+     } catch (err) {
+       console.error(err);
+       alert("An error occured while fetching user data");
+     }
   }
 
   useEffect(() => {

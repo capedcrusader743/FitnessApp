@@ -13,7 +13,6 @@ function Home() {
 
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
-  const [muscleName, setMuscleName] = useState("");
   const navigate = useNavigate();
   const [muscleGroup, setMuscleGroup] = useState([]);
   const fetchUserName = async () => {
