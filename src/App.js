@@ -9,6 +9,7 @@ import React from "react";
 import SignUp from "./SignUp";
 import Reset from "./Reset";
 import Exercises from "./Exercises";
+import NotFound from "./NotFound";
 
 function App() {
   // www.ourapp.com/home/chest
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/home/:muscle" element={<Exercises />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
     </div>

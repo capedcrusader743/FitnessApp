@@ -12,6 +12,7 @@ import ExerciseGroup from './ExerciseGroup';
 function Exercises() {
   const location = useLocation();
   const { from } = location.state;
+  console.log({from})
 
   const [user, loading] = useAuthState(auth);
   const [exercise_list, setexercise_list] = useState([]);
@@ -29,26 +30,33 @@ function Exercises() {
     }
   };
 
+  const fetchExercise = async () => {
+    try {
+      const exerciseRef = query(
+        collection(db, 'Workouts'), 
+        where('user', '==', user?.uid),
+        where('category', '==', from),
+        orderBy('name', 'asc')
+      );
+
+      const unsubscribe = onSnapshot(exerciseRef, snapshot => {
+        setexercise_list(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+      })
+      return () => {
+        unsubscribe();
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  }
+
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
     fetchUserName();
+    fetchExercise();
   }, [user, loading]);
-
-  useEffect(() => {
-    const exerciseRef = query(
-      collection(db, 'Workouts'), 
-      where('user', '==', user?.uid),
-      where('category', '==', from),
-      orderBy('name', 'asc')
-    );
-    const unsubscribe = onSnapshot(exerciseRef, snapshot => {
-      setexercise_list(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
-    })
-    return () => {
-      unsubscribe();
-    }
-  },[])
 
   function addExercise(inputText) {
     // console.log(inputText);
