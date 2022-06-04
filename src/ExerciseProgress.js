@@ -8,6 +8,8 @@ import ButtonAppBar from './ButtonAppBar';
 import './ExerciseProgress.css';
 import CreateProgress from './CreateProgress';
 import Progress from './Progress';
+import {Line} from 'react-chartjs-2';
+import { Chart } from 'chart.js/auto';
 
 
 function ExerciseProgress() {
@@ -52,10 +54,37 @@ function ExerciseProgress() {
       });
   }
 
+//     const datas = {
+//     labels: [progresses[0].data.date, progresses[1].data.date, progresses[2].data.date, progresses[3].data.date],
+//     datasets: [
+//       {
+//         label: "First dataset",
+//         data: [progresses[0].data.set, progresses[1].data.set, progresses[2].data.set, progresses[3].data.set],
+//         fill: true,
+//         backgroundColor: "rgba(75,192,192,0.2)",
+//         borderColor: "rgba(75,192,192,1)"
+//       }
+//     ]
+//   };
+//   console.log(progresses[0].data.date);
+//   const datas = progresses.map((progress) => {
+//       labels: progress.data.date
+//       datasets: [
+//           {
+//               label: "first dataset",
+//               data: progress.data.set,
+//               fill: true,
+//               backgroundColor: "rgba(75,192,192,0.2)",
+//               borderColor: "rgba(75,192,192,1)"
+//           }
+//       ]
+//   });
+
   return (
     <div>
         <ButtonAppBar />
         <h1>{exercise.progress}</h1>
+        {/* <Line data={datas}></Line> */}
         <CreateProgress onAdd={addProgresses} />
         <Stack spacing={2} direction="column">
             {progresses.map((progress) => {
