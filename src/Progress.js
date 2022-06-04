@@ -1,6 +1,7 @@
 import React from 'react'
 
 function Progress(props) {
+
   return (
     <div className='content-container'>
       <div className='row'>
@@ -11,7 +12,7 @@ function Progress(props) {
             {props.set}
         </div>
       </div>
-    </div>
+    </div>      
   )
 }
 
