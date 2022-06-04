@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { db, auth } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import Stack from '@mui/material/Stack';
@@ -9,7 +9,6 @@ import CreateExercise from './CreateExercise';
 import ExerciseGroup from './ExerciseGroup';
 
 function Exercises() {
-  const location = useLocation();
   const navigate = useNavigate();
   // if (location.state == null) {
   //   console.log("null");

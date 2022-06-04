@@ -10,6 +10,7 @@ import SignUp from "./SignUp";
 import Reset from "./Reset";
 import Exercises from "./Exercises";
 import NotFound from "./NotFound";
+import ExerciseProgress from "./ExerciseProgress";
 
 function App() {
   // www.ourapp.com/home/chest
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/home/:from" element={<Exercises />} />
+        <Route path="/home/:from/:progress" element={<ExerciseProgress  />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
