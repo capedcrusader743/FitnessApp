@@ -17,8 +17,21 @@ function ExerciseProgress() {
   const exercise = useParams();
   const [user, loading] = useAuthState(auth);
   const [progresses, setProgresses] = useState([]);
+  const [series, setSeries] = useState([]);
   const navigate = useNavigate();
 
+  //     const datas = {
+//     labels: [progresses[0].data.date, progresses[1].data.date, progresses[2].data.date, progresses[3].data.date],
+//     datasets: [
+//       {
+//         label: "First dataset",
+//         data: [100, 150, 200, 250],
+//         fill: true,
+//         backgroundColor: "rgba(75,192,192,0.2)",
+//         borderColor: "rgba(75,192,192,1)"
+//       }
+//     ]
+//   };
 
 
   // fetch progresses here
@@ -31,6 +44,7 @@ function ExerciseProgress() {
 
           const unsubscribe = onSnapshot(progressesRef, snapshot => {
               setProgresses(snapshot.docs.map(doc => ({id: doc.id, data: doc.data()})))
+              setSeries(snapshot.docs.map(doc => ({name: "hello", date: doc.data().date, set: doc.data().set})))
           })
           return () => {
               unsubscribe();
@@ -54,37 +68,36 @@ function ExerciseProgress() {
       });
   }
 
-//     const datas = {
-//     labels: [progresses[0].data.date, progresses[1].data.date, progresses[2].data.date, progresses[3].data.date],
-//     datasets: [
-//       {
-//         label: "First dataset",
-//         data: [progresses[0].data.set, progresses[1].data.set, progresses[2].data.set, progresses[3].data.set],
-//         fill: true,
-//         backgroundColor: "rgba(75,192,192,0.2)",
-//         borderColor: "rgba(75,192,192,1)"
-//       }
-//     ]
-//   };
-//   console.log(progresses[0].data.date);
-//   const datas = progresses.map((progress) => {
-//       labels: progress.data.date
-//       datasets: [
-//           {
-//               label: "first dataset",
-//               data: progress.data.set,
-//               fill: true,
-//               backgroundColor: "rgba(75,192,192,0.2)",
-//               borderColor: "rgba(75,192,192,1)"
-//           }
-//       ]
-//   });
+
+var string = series[0].set;
+var num = string.match(/\d+/g);
+console.log(num);
+console.log(string);
+    const datas = {
+    labels: series.map((data) => data.date),
+    datasets: [
+      {
+        label: "Max Weight",
+        data: series.map((data) => parseInt(data.set.split("/")[0])),
+        fill: false,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)"
+      },
+      {
+          label: "Max Reps",
+          data: series.map((data) => parseInt(data.set.split("/")[1])),
+          fill: false,
+          backgroundColor: "rgba(75,192,192,0.2)",
+          borderColor: "rgba(75,192,192,1)"          
+      }
+    ]
+  };
 
   return (
     <div>
         <ButtonAppBar />
         <h1>{exercise.progress}</h1>
-        {/* <Line data={datas}></Line> */}
+        <Line data={datas}></Line>
         <CreateProgress onAdd={addProgresses} />
         <Stack spacing={2} direction="column">
             {progresses.map((progress) => {
