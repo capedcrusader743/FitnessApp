@@ -69,10 +69,6 @@ function ExerciseProgress() {
   }
 
 
-var string = series[0].set;
-var num = string.match(/\d+/g);
-console.log(num);
-console.log(string);
     const datas = {
     labels: series.map((data) => data.date),
     datasets: [
