@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { db, auth } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
-import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
+import { query, collection, where, onSnapshot, orderBy } from 'firebase/firestore';
 import Stack from '@mui/material/Stack';
 import ButtonAppBar from './ButtonAppBar';
 import './ExerciseProgress.css';
@@ -20,26 +20,14 @@ function ExerciseProgress() {
   const [series, setSeries] = useState([]);
   const navigate = useNavigate();
 
-  //     const datas = {
-//     labels: [progresses[0].data.date, progresses[1].data.date, progresses[2].data.date, progresses[3].data.date],
-//     datasets: [
-//       {
-//         label: "First dataset",
-//         data: [100, 150, 200, 250],
-//         fill: true,
-//         backgroundColor: "rgba(75,192,192,0.2)",
-//         borderColor: "rgba(75,192,192,1)"
-//       }
-//     ]
-//   };
-
 
   // fetch progresses here
   const fetchProgresses = async () => {
       try {
           const progressesRef = query(
               collection(db, 'Progress'),
-              where('user', '==', user?.uid)
+              where('user', '==', user?.uid),
+              orderBy('date', 'asc')
           )
 
           const unsubscribe = onSnapshot(progressesRef, snapshot => {
@@ -83,8 +71,8 @@ function ExerciseProgress() {
           label: "Max Reps",
           data: series.map((data) => parseInt(data.set.split("/")[1])),
           fill: false,
-          backgroundColor: "rgba(75,192,192,0.2)",
-          borderColor: "rgba(75,192,192,1)"          
+          backgroundColor: "rgba(59,196,63,0.2)",
+          borderColor: "rgba(59,196,63,1)"          
       }
     ]
   };

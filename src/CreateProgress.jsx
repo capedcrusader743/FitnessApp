@@ -26,15 +26,6 @@ function CreateProgress(props) {
       });
   }
 
-  // function submitProgress(event) {
-  //   props.onAdd(progress);
-  //   setProgress({
-  //     date: date.getMonth() + 1 + "/" + date.getDate(),
-  //     set: ""
-  //   });
-  //   event.preventDefault();
-  // }
-
   function submitProgress(event) {
       event.preventDefault();
       addDoc(collection(db, 'Progress'), {

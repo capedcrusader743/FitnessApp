@@ -7,6 +7,7 @@ import ButtonAppBar from './ButtonAppBar';
 import MuscleGroup from './MuscleGroup';
 import CreateMuscle from './CreateMuscle';
 import Stack from '@mui/material/Stack';
+import "./Home.css";
 
 
 function Home() {
@@ -77,11 +78,11 @@ function Home() {
 
     <div className='homepage'>
       <div className='homepage_container'>
-        <ButtonAppBar />
-        <p>Logged in as</p> 
+        <ButtonAppBar name={name}/>
+        {/* <p>Logged in as</p> 
         <div>{name}</div>
         <div>UserID: {user?.uid}</div>
-        <div>{user?.email}</div>
+        <div>{user?.email}</div> */}
         <h1>Pick your muscle group</h1>
         <CreateMuscle onAdd={addMuscleGroup} />
         <Stack spacing={2} direction="column">

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,9 +7,10 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { auth, db, logout } from './firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import { MenuItem } from '@mui/material';
+import FadeMenu from './FadeMenu';
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
 
 
   // var user = auth.currentUser;
@@ -32,17 +33,9 @@ export default function ButtonAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            App Name
+          <FadeMenu name={props.name}/>
+          <Typography variant="h6" align='inherit' component="div" sx={{ flexGrow: 1 }}>
+            FitTrack
           </Typography>
           <Button onClick={logout} color="inherit">Log Out</Button>
         </Toolbar>
