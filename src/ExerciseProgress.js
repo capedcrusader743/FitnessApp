@@ -75,7 +75,8 @@ function ExerciseProgress() {
           borderColor: "rgba(59,196,63,1)"          
       }
     ]
-  };
+    };
+    // console.log(series);
 
   return (
     <div>
