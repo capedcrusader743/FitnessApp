@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
 import { db, auth } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import Stack from '@mui/material/Stack';
@@ -11,12 +10,19 @@ import ExerciseGroup from './ExerciseGroup';
 
 function Exercises() {
   const location = useLocation();
-  const { from } = location.state;
+  const navigate = useNavigate();
+  // if (location.state == null) {
+  //   console.log("null");
+  // }
+  //let { from } = location.state;
+  let { from } = useParams();
+  console.log(from);
+
 
   const [user, loading] = useAuthState(auth);
   const [exercise_list, setexercise_list] = useState([]);
   const [name, setName] = useState("");
-  const navigate = useNavigate();
+
   const fetchUserName = async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -29,26 +35,33 @@ function Exercises() {
     }
   };
 
+  const fetchExercise = async () => {
+     try {
+       const exerciseRef = query(
+         collection(db, 'Workouts'), 
+         where('user', '==', user?.uid),
+         where('category', '==', from),
+         orderBy('name', 'asc')
+       );
+
+       const unsubscribe = onSnapshot(exerciseRef, snapshot => {
+         setexercise_list(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+       })
+       return () => {
+         unsubscribe();
+       }
+     } catch (err) {
+       console.error(err);
+       alert("An error occured while fetching user data");
+     }
+  }
+
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
     fetchUserName();
+    fetchExercise();
   }, [user, loading]);
-
-  useEffect(() => {
-    const exerciseRef = query(
-      collection(db, 'Workouts'), 
-      where('user', '==', user?.uid),
-      where('category', '==', from),
-      orderBy('name', 'asc')
-    );
-    const unsubscribe = onSnapshot(exerciseRef, snapshot => {
-      setexercise_list(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
-    })
-    return () => {
-      unsubscribe();
-    }
-  },[])
 
   function addExercise(inputText) {
     // console.log(inputText);

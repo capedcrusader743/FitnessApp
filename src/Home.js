@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from './firebaseConfig';
-import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
+import { query, collection, getDocs, where, doc, deleteDoc, onSnapshot, orderBy, getDoc } from 'firebase/firestore';
 import ButtonAppBar from './ButtonAppBar';
 import MuscleGroup from './MuscleGroup';
 import CreateMuscle from './CreateMuscle';
@@ -27,35 +27,34 @@ function Home() {
     }
   };
 
+  // order the collection by alpha ascending
+  const fetchMuscleGroup = async () => {
+    try {
+      const muscleGroupRef = query(
+        collection(db, 'Categories'), 
+        where('user', '==', user?.uid),
+        orderBy('name', 'asc')
+      );
+  
+      const unsubscribe = onSnapshot(muscleGroupRef, snapshot => {
+        setMuscleGroup(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+      })
+      return () => {
+        unsubscribe();
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  }
+
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
     fetchUserName();
+    fetchMuscleGroup();
   }, [user, loading]);
 
-  // useEffect(() => {
-  //   getMuscleGroup();
-  // }, []);
-
-  // order the collection by alpha ascending
-  useEffect(() => {
-    const muscleGroupRef = query(
-      collection(db, 'Categories'), 
-      where('user', '==', user?.uid),
-      orderBy('name', 'asc')
-    );
-    // const muscleGroupRef = collection(db, 'Categories');
-    const unsubscribe = onSnapshot(muscleGroupRef, snapshot => {
-      setMuscleGroup(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
-    })
-    return () => {
-      unsubscribe();
-    }
-  },[])
-
-  // useEffect(() => {
-  //   // console.log("muscleGroup: ", muscleGroup)
-  // }, [muscleGroup]);
 
   function addMuscleGroup(inputText) {
     // console.log(inputText);

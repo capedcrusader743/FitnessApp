@@ -12,8 +12,8 @@ function CreateExercise(props) {
 
     // On change of textbox, update the exercise_tocreate variable
     function handleChange(event) {
-        const newValue = event.target.value
-        setexercise_tocreate(newValue)
+        const newValue = event.target.value;
+        setexercise_tocreate(newValue);
     }
 
     function submitExercise(event) {
