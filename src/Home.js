@@ -7,6 +7,7 @@ import ButtonAppBar from './ButtonAppBar';
 import MuscleGroup from './MuscleGroup';
 import CreateMuscle from './CreateMuscle';
 import Stack from '@mui/material/Stack';
+import "./Home.css";
 
 
 function Home() {
