@@ -32,7 +32,7 @@ export default function ButtonAppBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <FadeMenu name={props.name}/>
+          {/* <FadeMenu name={props.name}/> */}
           <Typography variant="h6" align='inherit' component="div" sx={{ flexGrow: 1 }}>
             FitTrack
           </Typography>

@@ -57,7 +57,7 @@ function ExerciseProgress() {
   }
 
 
-    const datas = {
+    let datas = {
     labels: series.map((data) => data.date),
     datasets: [
       {
