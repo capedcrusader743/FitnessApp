@@ -29,7 +29,7 @@ function SignUp() {
     <div className="register">
       <h1 className='welcome'>Welcome to SignUp Page</h1>
       <img className='fitness_icon' src='https://i.pinimg.com/736x/99/ec/1b/99ec1bc01c1c759a9af0f35ed8477531.jpg' alt='' />
-      <h1 className='app_name'>App Name</h1>
+      <h1 className='app_name'>FitTrack</h1>
       <div className="register__container">
         <input
           type="text"
