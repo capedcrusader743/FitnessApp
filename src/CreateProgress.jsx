@@ -57,7 +57,7 @@ function CreateProgress(props) {
         type="text"
         onChange={handleChange}
         value={progress.set}
-        placeholder="Enter Set"
+        placeholder="Weight/Set"
       />
       <Fab onClick={submitProgress} color="primary" aria-label="add">
           <AddIcon />
