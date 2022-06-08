@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { db, auth } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
-import { query, collection, where, onSnapshot, orderBy } from 'firebase/firestore';
+import { query, collection, where, onSnapshot, orderBy, getDoc, getDocs, doc } from 'firebase/firestore';
 import Stack from '@mui/material/Stack';
 import ButtonAppBar from './ButtonAppBar';
 import './ExerciseProgress.css';
@@ -20,6 +20,8 @@ function ExerciseProgress() {
   const [series, setSeries] = useState([]);
   const navigate = useNavigate();
 
+//   console.log(exercise.progress);
+
 
   // fetch progresses here
   const fetchProgresses = async () => {
@@ -27,15 +29,18 @@ function ExerciseProgress() {
           const progressesRef = query(
               collection(db, 'Progress'),
               where('user', '==', user?.uid),
+              where('w_name', '==', exercise.progress),
               orderBy('date', 'asc')
           )
 
           const unsubscribe = onSnapshot(progressesRef, snapshot => {
               setProgresses(snapshot.docs.map(doc => ({id: doc.id, data: doc.data()})))
-              setSeries(snapshot.docs.map(doc => ({name: "hello", date: doc.data().date, set: doc.data().set})))
+              setSeries(snapshot.docs.map(doc => ({date: doc.data().date, set: doc.data().set})))
           })
+
           return () => {
               unsubscribe();
+            //   unsub();
           }
       } catch (err) {
           console.error(err);
@@ -50,11 +55,6 @@ function ExerciseProgress() {
       fetchProgresses();
   }, [user,loading]);
 
-  function addProgresses(inputText) {
-      setProgresses(prevProgresses => {
-          return [...prevProgresses, inputText];
-      });
-  }
 
 
     let datas = {
@@ -83,7 +83,7 @@ function ExerciseProgress() {
         <ButtonAppBar />
         <h1>{exercise.progress}</h1>
         <Line data={datas}></Line>
-        <CreateProgress onAdd={addProgresses} />
+        <CreateProgress  />
         <Stack spacing={2} direction="column">
             {progresses.map((progress) => {
                 return (

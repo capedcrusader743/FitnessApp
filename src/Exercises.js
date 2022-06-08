@@ -79,6 +79,7 @@ function Exercises() {
       .catch(error => console.log(error.message));
   }
 
+  //console.log(exercise_list);
 
   return (
     <div className='ExercisePage'>
@@ -88,6 +89,11 @@ function Exercises() {
       <div>UserID: {user?.uid}</div>
       <div>{user?.email}</div>
       <div>What exercise will you do today?</div>
+      {/* {exercise_list.map((exercise)=> {
+        return (
+          <CreateExercise cat={from} key={exercise.id} id={exercise.id} onAdd={addExercise}/>
+        )
+      })} */}
       <CreateExercise cat={from} onAdd={addExercise} />
       <Stack spacing={2} direction="column">
         {exercise_list.map((exercise) => {
