@@ -30,7 +30,7 @@ function ExerciseProgress() {
               collection(db, 'Progress'),
               where('user', '==', user?.uid),
               where('w_name', '==', exercise.progress),
-              orderBy('date', 'asc')
+              orderBy('date', 'desc')
           )
 
           const unsubscribe = onSnapshot(progressesRef, snapshot => {
