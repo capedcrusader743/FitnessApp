@@ -8,6 +8,11 @@
     flex: 5;
 }
 
+.mid-panel {
+    background-color: lightyellow;
+    flex: 5;
+}
+
 .right-panel {
     background-color: lightgreen;
     flex: 5;

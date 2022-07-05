@@ -3,7 +3,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import { db, auth } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, query, where, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function CreateProgress(props) {
@@ -34,7 +34,8 @@ function CreateProgress(props) {
           date: date.getMonth() + 1 + "/" + date.getDate(),
           set: progress.set,
           w_name: exercise.progress,
-          user: user?.uid
+          user: user?.uid,
+          createdAt: serverTimestamp()
       });
 
         // Reset text input
@@ -57,7 +58,7 @@ function CreateProgress(props) {
         type="text"
         onChange={handleChange}
         value={progress.set}
-        placeholder="Weight/Set"
+        placeholder="Weight/Reps"
       />
       <Fab onClick={submitProgress} color="primary" aria-label="add">
           <AddIcon />
