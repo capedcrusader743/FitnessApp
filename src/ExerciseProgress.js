@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { db, auth } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
-import { query, collection, where, onSnapshot, orderBy, getDoc, getDocs, doc } from 'firebase/firestore';
+import { query, collection, where, onSnapshot, orderBy, getDoc, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import Stack from '@mui/material/Stack';
 import ButtonAppBar from './ButtonAppBar';
 import './ExerciseProgress.css';
@@ -30,7 +30,8 @@ function ExerciseProgress() {
               collection(db, 'Progress'),
               where('user', '==', user?.uid),
               where('w_name', '==', exercise.progress),
-              orderBy('date', 'desc')
+              //orderBy('date', 'desc')
+              orderBy('createdAt', 'asc')
           )
 
           const unsubscribe = onSnapshot(progressesRef, snapshot => {
@@ -78,6 +79,16 @@ function ExerciseProgress() {
     };
     // console.log(series);
 
+    function deleteProgress(id) {
+      // console.log(e);
+      const docRef = doc(db, 'Progress', id);
+      // console.log(key);
+      console.log(docRef);
+      deleteDoc(docRef)
+        .then(() => console.log('Document deleted'))
+        .catch(error => console.log(error.message));
+    }
+
   return (
     <div>
         <ButtonAppBar />
@@ -92,6 +103,7 @@ function ExerciseProgress() {
                         id={progress.id}
                         date={progress.data.date}
                         set={progress.data.set}
+                        onDelete={deleteProgress}
                     />
                 )
             })}
